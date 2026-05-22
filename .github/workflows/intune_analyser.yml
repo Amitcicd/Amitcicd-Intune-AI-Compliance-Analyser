@@ -1,0 +1,46 @@
+name: Intune AI Compliance Analyser
+
+on:
+  schedule:
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+
+jobs:
+  analyse:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: pip install requests anthropic azure-identity
+
+    - name: Azure login with OIDC
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.CLIENT_ID }}
+        tenant-id: ${{ secrets.TENANT_ID }}
+        allow-no-subscriptions: true
+
+    - name: Run analyser
+      env:
+        TENANT_ID: ${{ secrets.TENANT_ID }}
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+      run: python intune_claude_analyser_clean.py
+
+    - name: Upload report
+      uses: actions/upload-artifact@v4
+      with:
+        name: intune-report
+        path: intune_report_*.txt

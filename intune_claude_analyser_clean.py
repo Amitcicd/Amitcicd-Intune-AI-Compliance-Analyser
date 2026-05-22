@@ -12,9 +12,9 @@ from datetime import datetime, timedelta
 from azure.identity import DefaultAzureCredential
 
 # CONFIGURATION
-TENANT_ID  = os.environ.get("TENANT_ID", "your-tenant-id")
-CLIENT_ID  = os.environ.get("CLIENT_ID", "your-app-client-id")
-CLAUDE_API = os.environ.get("CLAUDE_API_KEY", "your-claude-api-key")
+TENANT_ID  = os.environ.get("TENANT_ID", "78ca8843-c58b-4aca-824a-9d987a027867")
+CLIENT_ID  = os.environ.get("CLIENT_ID", "edd72459-8643-4257-a125-e649c9e16b85")
+CLAUDE_API = os.environ.get("CLAUDE_API_KEY", "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")
 
 
 def get_token():

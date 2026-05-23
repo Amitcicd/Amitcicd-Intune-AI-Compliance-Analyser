@@ -23,7 +23,7 @@ jobs:
         python-version: '3.11'
 
     - name: Install dependencies
-      run: pip install requests anthropic azure-identity
+      run: pip install requests anthropic azure-identity openpyxl
 
     - name: Azure login with OIDC
       uses: azure/login@v1
